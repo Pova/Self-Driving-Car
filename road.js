@@ -106,8 +106,15 @@ class Road {
 
         // draw trees
         this.trees.forEach(tree => {
+            ctx.fillStyle = 'brown';
+            ctx.fillRect(tree.x, tree.y, 20, 40); 
             ctx.fillStyle = 'green';
-            ctx.fillRect(tree.x, tree.y, 20, 40);
+            ctx.beginPath();
+            ctx.arc(tree.x + 10, tree.y - 10, 30, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+
+            
         })
 
     }

@@ -24,7 +24,5 @@ class Vehicle {
         ctx.fillRect(-this.width / 2, -this.length / 2, this.width, this.length);
         
         ctx.restore();
-
     }
-    
 }
