@@ -23,16 +23,16 @@ animate();
 
 function animate(){
     
-    canvas.height=window.innerHeight * 0.8;  // used to clear canvas
+    canvas.height = window.innerHeight * 0.9;  // used to clear canvas
     
     car.update();
     path.update();
     
-    ctx.save();
-    ctx.translate(0, -car.y + canvas.height * 0.7);
-    path.draw();
+    ctx.translate(0, -car.y + canvas.height * 0.8);
+    path.draw();    
     car.draw(ctx)
-    ctx.restore();
+    
+
     // drawstuff();
     requestAnimationFrame(animate);
 }
