@@ -1,11 +1,19 @@
 class Controls{
-    constructor(){
+    constructor(type = 'npc'){
         this.forward = false;
         this.backward = false;
         this.left = false;
         this.right = false;
         
-        this.#addKeyListeners();
+        switch(type){
+            case 'npc':
+                this.forward = true;
+                break;
+            case 'player':
+                this.#addKeyListeners();
+                break;
+        }
+
     }
 
     // Private method key listeners for the controls
@@ -24,7 +32,6 @@ class Controls{
                 case e.key == 'd' || e.key == 'ArrowRight':
                     this.right = true;
                     break;
-                
             }
         }
         document.onkeyup = (e) => {

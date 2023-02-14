@@ -3,6 +3,8 @@
 To do:
 
 - [x] Set up a repo
-- [ ] Implement basic object classes - vehicle, car, road
-- [ ] Implement vehicle physics
-- [ ] Implement animation 
+- [x] Implement basic object classes - vehicle, car, road
+- [x] Implement vehicle physics
+- [x] Implement animation 
+- [ ] Implement sensors
+- [ ] Implement Neural Net

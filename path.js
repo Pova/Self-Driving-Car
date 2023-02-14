@@ -4,20 +4,18 @@ class Path {
         this.sy = sy;
         this.height = height;
         this.top = this.sy;
-
         this.roads = [];
-        
-        for (let i = -3; i < 1; i++) {
+
+        for (let i = -4; i < 1; i++) {
             this.#addNewRoad(this.sx, this.sy - (i * this.height), this.height);
         }
     }
     
     update() {
         // add new roads ahead and removes previous roads off screen
-        if (car.y - this.height * 2 < this.top) {
+        if (car.y - canvas.height < this.top) {
             this.#addNewRoad(this.sx, this.top - this.height, this.height);
             this.top -= this.height;
-            // this.roads[0]=null;
             this.roads.shift();
         }
     }
@@ -29,4 +27,5 @@ class Path {
     #addNewRoad(x, y, height) {
         this.roads.push(new Road(x, y, height));
     }
+    
 }
