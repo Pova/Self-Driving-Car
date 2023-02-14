@@ -10,13 +10,11 @@ class Lane {
     }
     
     draw() {
-        // draw lane
         ctx.fillStyle = this.color;
         ctx.fillRect(this.sx - this.width / 2, this.sy, this.width, this.height + 1);
-    }
+    }   
     
 }
-
 
 class Road {
     constructor(sx, sy, height) {  // start and end x, y pos and angle
@@ -33,12 +31,17 @@ class Road {
         this.trees = [];
         this.#createTrees();
 
+        this.traffic = [];
+        this.#createTraffic();
+
+
         const topLeft = {x: this.left, y: this.sy};
         const bottomLeft = {x: this.left, y: this.sy + this.height};
         const topRight = {x: this.right, y: this.sy};
         const bottomRight = {x: this.right, y: this.sy + this.height};
         this.borders = [[topLeft, bottomLeft], [topRight, bottomRight]]
     }
+
 
     #createLanes() {
         for (let i = 0; i < laneCount; i++) {
@@ -49,27 +52,59 @@ class Road {
         }
     }
 
+
     #createTrees(){
-        for (let i = 2; i < Math.random() * 5; i++) {
+        for (let i = 0; i < Math.random() * 2; i++) {
             this.trees.push( 
                 {
                     x: this.left - 50 - Math.random() * 50,
-                    y: this.sy + Math.random() * this.height 
+                    y: this.sy + i * this.height/3 + Math.random() * this.height/3 
                 }
             )
         }
-        for (let i = 2; i < Math.random() * 5; i++) {
+        for (let i = 0; i < Math.random() * 2; i++) {
             this.trees.push( 
                 {
                     x: this.right + 50 + Math.random() * 50,
-                    y: this.sy + Math.random() * this.height 
+                    y: this.sy + i * this.height/3 + Math.random() * this.height/3 
                 }
             )
         }
     }
 
-    draw() {
 
+    #createTraffic() {
+        const gap = 2;
+        
+        // random array of lane numbers to fill with traffic
+        let laneNums = [];
+        for (let i = 0; i < laneCount; i++) {
+            laneNums.push(i);
+        }
+        laneNums = shuffleArray(laneNums);
+        laneNums.splice(0, gap)
+        
+        laneNums.forEach( laneNum => {
+            const lane = this.lanes[laneNum];
+            this.traffic.push(
+                new Vehicle(
+                    lane.sx,
+                    lane.sy,
+                    30,
+                    50,
+                )
+            )
+        })
+    }
+
+
+    update(){
+        // update traffic
+        this.traffic.forEach(vehicle => vehicle.update());
+    }
+
+
+    draw() {
         // draw lanes
         this.lanes.forEach(lane => lane.draw());
 
@@ -102,8 +137,7 @@ class Road {
             ctx.stroke();
             ctx.closePath();
         })
-
-
+        
         // draw trees
         this.trees.forEach(tree => {
             ctx.fillStyle = 'brown';
@@ -113,10 +147,6 @@ class Road {
             ctx.arc(tree.x + 10, tree.y - 10, 30, 0, Math.PI * 2);
             ctx.fill();
             ctx.closePath();
-
-            
         })
-
     }
-    
 }

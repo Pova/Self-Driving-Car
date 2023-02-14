@@ -1,61 +1,88 @@
-
-/**
- * Calculates the intersection point of two lives given a point on each line and it's angle in radians
- * @param {number} x0 x coordinate of first line
- * @param {number} y0 y coordinate of first line
- * @param {number} ang0 angle of first line in rads
- * @param {number} x1 x coordinate of second line
- * @param {number} y1 y coordinate of second line
- * @param {number} ang1 angle of second line in rads
- * @returns 
- */
-function intersect(x0, y0, a0, x1, y1, a1) {
-
-    console.log(a0, a1)
-
-    // check if lines are parallel
-    if (+(a0-a1 % 3.141).toFixed(2) === 0) throw new Error('Lines are parallel')
-    
-    // check for vertical and horizontal lines
-    switch(true) {
-        case ((a0 % 3.141).toFixed(2) == 1.57): // vertial at x0
-            x = x0
-            y = Math.round(Math.tan(a1) * (x0-x1) + y1)
-            console.log('vertical line at x = ' + x0 + ' y = ' + y) 
-            return {x, y}
-        case ((a1 % 3.141).toFixed(2) == 1.57): // vertical at x1
-            x = x1
-            y = Math.round(Math.tan(a0) * (x1-x0) + y0)
-            console.log('vertical line at x = ' + x1 + ' y = ' + y)
-            return {x, y}
-        case ((a0 % 3.141).toFixed(2) == 0): // horizontal at y0
-            y = y0
-            x = Math.round((y0-y1) / Math.tan(a1) + x1)
-            console.log('horizontal line at y = ' + y0 + ' x = ' + x)
-            return {x, y}
-        case ((a1 % 3.141).toFixed(2) == 0): // horizontal at y1
-            y = y1
-            x = Math.round((y1-y0) / Math.tan(a0) + x0)
-            console.log('horizontal line at y = ' + y1 + ' x = ' + x)
-            return {x, y}
-    }
-
-    // let m0 = Math.tan(a0*toRad) // Line 0: y = m0 (x - x0) + y0
-    // let m1 = Math.tan(a1*toRad) // Line 1: y = m1 (x - x1) + y1
-    // let x = ((m0 * x0 - m1 * x1) - (y0 - y1)) / (m0 - m1)
-    // return [x, m0 * (x - x0) + y0]
-    return null
-}
-
-
 /**
  * Linear interpolation between two values
  * @param {number} a
  * @param {number} b
  * @param {number} t
+ * @returns {number}
  */ 
 function lerp(a, b, t) {
     return a + (b - a) * t;
+}
+
+
+/**
+ * randomize the order of an array
+ * @param {array} array
+ * @returns {array}
+ */
+function shuffleArray(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+}
+
+
+/**
+ * Get the intersection point of two lines
+ * @param {object} A
+ * @param {object} B
+ * @param {object} C
+ * @param {object} D
+ * @returns {object | null} 
+ */
+function getIntersection(A,B,C,D){ 
+    const tTop=(D.x-C.x)*(A.y-C.y)-(D.y-C.y)*(A.x-C.x);
+    const uTop=(C.y-A.y)*(A.x-B.x)-(C.x-A.x)*(A.y-B.y);
+    const bottom=(D.y-C.y)*(B.x-A.x)-(D.x-C.x)*(B.y-A.y);
+    
+    if(bottom!=0){
+        const t=tTop/bottom;
+        const u=uTop/bottom;
+        if(t>=0 && t<=1 && u>=0 && u<=1){
+            return {
+                x:lerp(A.x,B.x,t),
+                y:lerp(A.y,B.y,t),
+                offset:t
+            }
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Check if two polygons intersect
+ * @param {array} poly1 
+ * @param {array} poly2 
+ * @returns {boolean}
+ */
+function polysIntersect(poly1, poly2){
+    for(let i=0;i<poly1.length;i++){
+        for(let j=0;j<poly2.length;j++){
+            const touch=getIntersection(
+                poly1[i],
+                poly1[(i+1)%poly1.length],
+                poly2[j],
+                poly2[(j+1)%poly2.length]
+            );
+            if(touch){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 
