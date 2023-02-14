@@ -2,7 +2,7 @@ class Traffic {
     constructor() {
         this.vehicles = [];
         this.trafficSpacing = 300;
-        this.yVariance = 100;
+        this.yVariance = 10;
         this.emptyLanes = 2;
         this.top = 0 + (car.y/2);
     }

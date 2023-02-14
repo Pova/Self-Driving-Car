@@ -8,16 +8,13 @@ class Vehicle {
         this.speed = 1;
         this.maxSpeed = 1;
         this.direction = 0;
-                
 
         this.controls = new Controls();
     }
 
-
     update() {
         this.y -= this.speed;
     }
-
 
     draw() {
         ctx.fillStyle = this.color;
@@ -65,6 +62,5 @@ class Vehicle {
 
         return points;
     }
-
     
 }
