@@ -13,14 +13,18 @@ class Player extends Vehicle {
         this.maxTurnSpeed = 0.02;
 
         this.damaged = false;
+
+        this.sensor = new Sensor(this);
     }
 
-    update(){
+    update(path){
         // handle movement
         this.#handleMovement();
 
         // check for collisions
         this.#collisionCheck();
+
+        this.sensor.update(path,traffic);
     }
 
     #handleMovement(){
