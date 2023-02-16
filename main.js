@@ -27,17 +27,16 @@ animate();
 
 function animate(){
     if (play) {
-
         canvas.height = window.innerHeight * 0.9;  // used to clear canvas
         
-        car.update();
+        car.update(path,traffic);
         path.update();
         traffic.update();
         
         ctx.translate(0, -car.y + canvas.height * 0.8);
         path.draw();    
-        car.draw(ctx)
         traffic.draw();
+        car.draw(ctx)
     }
     requestAnimationFrame(animate);
 }
