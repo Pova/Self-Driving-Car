@@ -6,5 +6,7 @@ To do:
 - [x] Implement basic object classes - vehicle, car, road
 - [x] Implement vehicle physics
 - [x] Implement animation 
-- [ ] Implement sensors
-- [ ] Implement Neural Net
+- [x] Implement sensors
+- [ ] Implement neural net "brain" on playerCar
+- [ ] Implement neural network visualizer
+- [ ] Implement genetic algorithm for optimizing NN
