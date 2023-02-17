@@ -10,6 +10,7 @@ class Vehicle {
         this.direction = 0;
 
         this.controls = new Controls();
+        this.sensor = null; //traffic has no sensors
     }
 
     update() {
@@ -27,6 +28,10 @@ class Vehicle {
         }
         ctx.closePath();
         ctx.fill();
+        if(this.sensor){
+            this.sensor.draw(ctx);
+        }
+        
     }
 
     // returns an array of points that make up the car's polygon
