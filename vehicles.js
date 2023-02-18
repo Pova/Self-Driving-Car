@@ -1,5 +1,5 @@
 class Vehicle {
-    constructor(x, y, width, length) {
+    constructor(x, y, width, length, type='npc') {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -9,8 +9,10 @@ class Vehicle {
         this.maxSpeed = 1;
         this.direction = 0;
 
-        this.controls = new Controls();
+        this.controls = new Controls(type);
         this.sensor = null; //traffic has no sensors
+
+        this.useBrain = false;
     }
 
     update() {
@@ -18,18 +20,18 @@ class Vehicle {
     }
 
     draw() {
-        ctx.fillStyle = this.color;
+        roadCtx.fillStyle = this.color;
         
         const points = this.getPolygon();
-        ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
+        roadCtx.beginPath();
+        roadCtx.moveTo(points[0].x, points[0].y);
         for (let i = 1; i < points.length; i++) {
-            ctx.lineTo(points[i].x, points[i].y);
+            roadCtx.lineTo(points[i].x, points[i].y);
         }
-        ctx.closePath();
-        ctx.fill();
+        roadCtx.closePath();
+        roadCtx.fill();
         if(this.sensor){
-            this.sensor.draw(ctx);
+            this.sensor.draw(roadCtx);
         }
         
     }
