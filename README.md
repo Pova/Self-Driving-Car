@@ -7,6 +7,6 @@ To do:
 - [x] Implement vehicle physics
 - [x] Implement animation 
 - [x] Implement sensors
-- [ ] Implement neural net "brain" on playerCar
+- [x] Implement neural net "brain" on playerCar
 - [ ] Implement neural network visualizer
 - [ ] Implement genetic algorithm for optimizing NN
