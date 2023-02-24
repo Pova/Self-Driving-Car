@@ -41,6 +41,7 @@ function animate(){
         path.draw();    
         traffic.draw();
         car.draw(roadCtx)
+        Visualizer.drawNetwork(networkCtx, car.brain);
     }
     requestAnimationFrame(animate);
 }

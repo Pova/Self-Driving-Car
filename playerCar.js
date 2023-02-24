@@ -16,7 +16,7 @@ class Player extends Vehicle {
 
         this.sensor = new Sensor(this);
         this.brain = new NeuralNetwork(
-            [this.sensor.rayCount,6,4]
+            [this.sensor.rayCount,6,8,4,4]
         ); //6 neurons in hidden layer
 
         if (type=='AI'){
