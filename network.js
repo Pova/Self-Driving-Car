@@ -33,7 +33,7 @@ class NeuralNetwork{
 }
 
 class Level{
-    constructor(inputCount,outputCount){
+    constructor(inputCount, outputCount){
         this.inputs = new Array(inputCount);
         this.outputs = new Array(outputCount);
         this.biases = new Array(outputCount);
@@ -49,7 +49,7 @@ class Level{
     static #randomize(level){
         for(let i=0; i<level.inputs.length; i++){
             for (let j=0; j<level.outputs.length; j++){
-                level.weights[i][j] = Math.random()*2-1; //random value between -1 and 1
+                level.weights[i][j] = Math.random()*2 - 1; //random value between -1 and 1
             }
         }
 
@@ -58,7 +58,7 @@ class Level{
         }
     }
 
-    static feedForward(givenInputs,level){
+    static feedForward(givenInputs, level){
         for (let i=0; i<level.inputs.length; i++){
             level.inputs[i] = givenInputs[i];
         }
