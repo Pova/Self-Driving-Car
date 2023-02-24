@@ -10,8 +10,8 @@ class Lane {
     }
     
     draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.sx - this.width / 2, this.sy, this.width, this.height + 1);
+        roadCtx.fillStyle = this.color;
+        roadCtx.fillRect(this.sx - this.width / 2, this.sy, this.width, this.height + 1);
     }   
     
 }
@@ -110,43 +110,43 @@ class Road {
 
         // draw lane lines
         for (let i=0; i <= laneCount; i++) {
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 3;
+            roadCtx.strokeStyle = 'white';
+            roadCtx.lineWidth = 3;
             
             // dashed for middle lane, solid for outer
             if (i == 0 || i == laneCount) {
-                ctx.setLineDash([]);
+                roadCtx.setLineDash([]);
             } else {
-                ctx.setLineDash([20, 20]);
+                roadCtx.setLineDash([20, 20]);
             }
 
-            ctx.beginPath();
-            ctx.moveTo(this.left + (i * laneWidth), this.sy);
-            ctx.lineTo(this.left + (i * laneWidth), this.sy + this.height);
-            ctx.stroke();
-            ctx.closePath();
+            roadCtx.beginPath();
+            roadCtx.moveTo(this.left + (i * laneWidth), this.sy);
+            roadCtx.lineTo(this.left + (i * laneWidth), this.sy + this.height);
+            roadCtx.stroke();
+            roadCtx.closePath();
         }
 
         // draw borders 
         this.borders.forEach(border => {
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = this.borderWidth;
-            ctx.beginPath();
-            ctx.moveTo(border[0].x, border[0].y);
-            ctx.lineTo(border[1].x, border[1].y);
-            ctx.stroke();
-            ctx.closePath();
+            roadCtx.strokeStyle = 'black';
+            roadCtx.lineWidth = this.borderWidth;
+            roadCtx.beginPath();
+            roadCtx.moveTo(border[0].x, border[0].y);
+            roadCtx.lineTo(border[1].x, border[1].y);
+            roadCtx.stroke();
+            roadCtx.closePath();
         })
         
         // draw trees
         this.trees.forEach(tree => {
-            ctx.fillStyle = 'brown';
-            ctx.fillRect(tree.x, tree.y, 20, 40); 
-            ctx.fillStyle = 'green';
-            ctx.beginPath();
-            ctx.arc(tree.x + 10, tree.y - 10, 30, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.closePath();
+            roadCtx.fillStyle = 'brown';
+            roadCtx.fillRect(tree.x, tree.y, 20, 40); 
+            roadCtx.fillStyle = 'green';
+            roadCtx.beginPath();
+            roadCtx.arc(tree.x + 10, tree.y - 10, 30, 0, Math.PI * 2);
+            roadCtx.fill();
+            roadCtx.closePath();
         })
     }
 }

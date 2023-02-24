@@ -1,5 +1,5 @@
 class Controls{
-    constructor(type = 'npc'){
+    constructor(type){
         this.forward = false;
         this.backward = false;
         this.left = false;

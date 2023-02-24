@@ -1,30 +1,52 @@
 class Player extends Vehicle {
 
-    constructor(x, y, width, length ) {
+    constructor(x, y, width, length, type) {
         super(x, y, width, length);
 
-        this.controls = new Controls('player')
+        this.controls = new Controls(type);
         this.speed = 0;
         this.color = 'red'
 
         this.acceleration = 0.02;
         this.friction = 0.005;
-        this.maxSpeed = 3;
+        this.maxSpeed = 2;
         this.maxTurnSpeed = 0.02;
 
         this.damaged = false;
 
         this.sensor = new Sensor(this);
+        this.brain = new NeuralNetwork(
+            [this.sensor.rayCount,6,4]
+        ); //6 neurons in hidden layer
+
+        if (type=='AI'){
+            this.useBrain = true;
+        }
+        
     }
 
-    update(path){
+    update(path,traffic){
+        if (this.sensor){
+            this.sensor.update(path,traffic);
+            const offsets = this.sensor.readings.map(
+                s =>s==null?0:1-s.offset
+            );
+            const outputs = NeuralNetwork.feedForward(offsets,this.brain);
+
+            if (car.useBrain){
+                this.controls.forward = outputs[0]==1;
+                this.controls.right = outputs[1]==1;
+                this.controls.backward = outputs[2]==1;
+                this.controls.left = outputs[3]==1;
+            }
+        }
+
         // handle movement
         this.#handleMovement();
 
         // check for collisions
         this.#collisionCheck();
-
-        this.sensor.update(path,traffic);
+        
     }
 
     #handleMovement(){

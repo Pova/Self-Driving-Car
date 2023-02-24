@@ -12,14 +12,14 @@ class Traffic {
         this.top -= 1 // move top with traffic 
 
         // add traffic ahead 
-        if (car.y - (canvas.height) < this.top) {
+        if (car.y - (roadCanvas.height) < this.top) {
             this.addNewTraffic();
             this.top -= this.trafficSpacing;
         }
 
         // remove traffic behind 
         this.vehicles.forEach((vehicle, index) => {
-            if (vehicle.y > car.y + canvas.height / 2) {
+            if (vehicle.y > car.y + roadCanvas.height / 2) {
                 this.vehicles.splice(index, 1)
             }
             vehicle.update()
