@@ -19,7 +19,7 @@ class Vehicle {
         this.y -= this.speed;
     }
 
-    draw() {
+    draw(context,drawSensor=false) {
         roadCtx.fillStyle = this.color;
         
         const points = this.getPolygon();
@@ -30,7 +30,7 @@ class Vehicle {
         }
         roadCtx.closePath();
         roadCtx.fill();
-        if(this.sensor){
+        if(this.sensor && drawSensor){
             this.sensor.draw(roadCtx);
         }
         
