@@ -11,12 +11,11 @@ class Player extends Vehicle {
         this.friction = 0.005;
         this.maxSpeed = 2;
         this.maxTurnSpeed = 0.02;
-
         this.damaged = false;
 
         this.sensor = new Sensor(this);
         this.brain = new NeuralNetwork(
-            [this.sensor.rayCount,6,8,4,4]
+            [this.sensor.rayCount,6,4]
         ); //6 neurons in hidden layer
 
         if (type=='AI'){
@@ -27,25 +26,27 @@ class Player extends Vehicle {
 
     update(path,traffic){
         if (this.sensor){
-            this.sensor.update(path,traffic);
+            this.sensor.sensorUpdate(path,traffic);
             const offsets = this.sensor.readings.map(
                 s =>s==null?0:1-s.offset
             );
             const outputs = NeuralNetwork.feedForward(offsets,this.brain);
-
-            if (car.useBrain){
-                this.controls.forward = outputs[0]==1;
-                this.controls.right = outputs[1]==1;
-                this.controls.backward = outputs[2]==1;
-                this.controls.left = outputs[3]==1;
-            }
+        if (this.useBrain){
+            this.controls.forward = outputs[0]==1;
+            this.controls.right = outputs[1]==1;
+            this.controls.backward = outputs[2]==1;
+            this.controls.left = outputs[3]==1;
         }
-
-        // handle movement
-        this.#handleMovement();
+    }
 
         // check for collisions
         this.#collisionCheck();
+
+        // handle movement
+        if (!this.damaged){
+            this.#handleMovement();
+        }
+        
         
     }
 
@@ -102,8 +103,12 @@ class Player extends Vehicle {
         path.roads.forEach(road => {
             road.borders.forEach(border => {
                 if (polysIntersect(this.getPolygon(), border)){
-                    console.log('collision')
-                    play = false;
+                    this.damaged = true;
+                    this.color = 'grey'
+                    const allCarsDamaged = cars.every(car => car.damaged);
+                    if (allCarsDamaged) {
+                        play = false;
+                      }
                 }
             
             })
@@ -113,8 +118,12 @@ class Player extends Vehicle {
         // check for collision with other cars
         traffic.vehicles.forEach(car => {
             if (polysIntersect(this.getPolygon(), car.getPolygon())){
-                console.log('collision')
-                play = false;
+                this.damaged = true;
+                this.color = 'grey'
+                const allCarsDamaged = cars.every(car => car.damaged);
+                if (allCarsDamaged) {
+                    play = false;
+                  }
             }
         })
 
