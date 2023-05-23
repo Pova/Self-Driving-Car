@@ -13,7 +13,7 @@ class Path {
     
     update() {
         // add new roads ahead and removes previous roads off screen
-        if (car.y - roadCanvas.height < this.top) {
+        if (bestCar.y - roadCanvas.height < this.top) {
             this.#addNewRoad(this.sx, this.top - this.height, this.height);
             this.top -= this.height;
             this.roads.shift();
