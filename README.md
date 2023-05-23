@@ -8,5 +8,5 @@ To do:
 - [x] Implement animation 
 - [x] Implement sensors
 - [x] Implement neural net "brain" on playerCar
-- [ ] Implement neural network visualizer
+- [x] Implement neural network visualizer
 - [ ] Implement genetic algorithm for optimizing NN
