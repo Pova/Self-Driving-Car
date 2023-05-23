@@ -8,7 +8,7 @@ class Sensor {
         this.readings = []; //distances to obstacle
     }
 
-    update(path,traffic){ 
+    sensorUpdate(path,traffic){ 
         this.#castRays();
         this.readings = [];
         for (let i=0;i<this.rays.length;i++){
@@ -42,7 +42,6 @@ class Sensor {
     #getReadings(ray,path,traffic){
         let touches=[];
         for(let i=0;i<path.roads.length;i++){
-            
             let roadBorders=path.roads[i].borders;
             for(let j=0;j<roadBorders.length;j++){
                 const touch=getIntersection(
