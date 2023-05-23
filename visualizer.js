@@ -23,7 +23,7 @@
                 left, levelTop,
                 width, levelHeight,
                 i == network.levels.length-1
-                    ? ['🠉','🠈','🠊','🠋']
+                    ? ['F','R','B','L']
                     : []
             );
         }
@@ -90,7 +90,7 @@
                 ctx.textBaseline="middle";
                 ctx.fillStyle="black";
                 ctx.strokeStyle="white";
-                ctx.font=(nodeRadius*1.5)+"px Arial";
+                ctx.font=(nodeRadius*1)+"px Arial";
                 ctx.fillText(outputLabels[i],x,top+nodeRadius*0.1);
                 ctx.lineWidth=0.5;
                 ctx.strokeText(outputLabels[i],x,top+nodeRadius*0.1);
