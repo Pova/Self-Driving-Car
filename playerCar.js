@@ -102,17 +102,18 @@ class Player extends Vehicle {
         // check for collision with road boarders
         path.roads.forEach(road => {
             road.borders.forEach(border => {
-                if (polysIntersect(this.getPolygon(), border)){
+                if (polysIntersect(this.getPolygon(), border) 
+                || Math.abs(this.x-roadCanvas.width/2)>roadCanvas.width/2 //fixes off screen car bug
+                ){
                     this.damaged = true;
                     this.color = 'grey'
+                    // check if all cars are damanged
                     const allCarsDamaged = cars.every(car => car.damaged);
                     if (allCarsDamaged) {
                         play = false;
                       }
                 }
-            
-            })
-            
+            })  
         })
 
         // check for collision with other cars
@@ -120,12 +121,12 @@ class Player extends Vehicle {
             if (polysIntersect(this.getPolygon(), car.getPolygon())){
                 this.damaged = true;
                 this.color = 'grey'
+                // check if all cars are damanged
                 const allCarsDamaged = cars.every(car => car.damaged);
                 if (allCarsDamaged) {
                     play = false;
                   }
             }
         })
-
     }
 }
